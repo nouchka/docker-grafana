@@ -9,6 +9,7 @@
 GRAFANA_URL=http://${GF_SECURITY_ADMIN_USER}:${GF_SECURITY_ADMIN_PASSWORD}@${GF_SERVER_HTTP_ADDR:-localhost}:${GF_SERVER_HTTP_PORT:-3000}
 DATASOURCES_PATH=${DATASOURCES_PATH:-/etc/grafana/datasources}
 DASHBOARDS_PATH=${DASHBOARDS_PATH:-/etc/grafana/dashboards}
+USERS_PATH=${USERS_PATH:-/etc/grafana/users}
 
 # Generic function to call the Vault API
 grafana_api() {
@@ -66,12 +67,34 @@ install_dashboards() {
   done
 }
 
+install_users() {
+  local user
+
+  for user in ${USERS_PATH}/*.json
+  do
+    if [[ -f "${user}" ]]; then
+      echo "Importing user ${user}"
+      if grafana_api POST /api/admin/users "" "${user}"; then
+        echo "imported ok"
+      else
+        echo "import failed"
+      fi
+    fi
+  done
+}
+
+install_plugins() {
+  echo raintank-worldping-app| xargs -n 1 grafana-cli plugins install
+}
+
 configure_grafana() {
   wait_for_api
   install_datasources
   install_dashboards
+  install_users
 }
 
+install_plugins
 echo "Running configure_grafana in the background..."
 configure_grafana &
 /run.sh
