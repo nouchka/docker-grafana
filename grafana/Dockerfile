@@ -1,4 +1,5 @@
 FROM grafana/grafana:4.6.3
+LABEL maintainer="Jean-Avit Promis docker@katagena.com"
 # https://hub.docker.com/r/grafana/grafana/tags/
 
 COPY docker-entrypoint.sh /etc/grafana/docker-entrypoint.sh

@@ -3,8 +3,8 @@
 # Script to configure grafana datasources and dashboards.
 # https://github.com/grafana/grafana-docker/issues/74
 
-[ ! -f /run/secrets/grafana-auth-user ] || GF_SECURITY_ADMIN_USER=`cat /run/secrets/grafana-auth-user`
-[ ! -f /run/secrets/grafana-auth-password ] || GF_SECURITY_ADMIN_PASSWORD=`cat /run/secrets/grafana-auth-password`
+[ ! -f /run/secrets/grafana-auth-user ] || GF_SECURITY_ADMIN_USER=$(cat /run/secrets/grafana-auth-user)
+[ ! -f /run/secrets/grafana-auth-password ] || GF_SECURITY_ADMIN_PASSWORD=$(cat /run/secrets/grafana-auth-password)
 
 GRAFANA_URL=http://${GF_SECURITY_ADMIN_USER}:${GF_SECURITY_ADMIN_PASSWORD}@${GF_SERVER_HTTP_ADDR:-localhost}:${GF_SERVER_HTTP_PORT:-3000}
 DATASOURCES_PATH=${DATASOURCES_PATH:-/etc/grafana/datasources}
