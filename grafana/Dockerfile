@@ -1,4 +1,4 @@
-FROM grafana/grafana:4.6.3
+FROM grafana/grafana:latest
 LABEL maintainer="Jean-Avit Promis docker@katagena.com"
 # https://hub.docker.com/r/grafana/grafana/tags/
 
