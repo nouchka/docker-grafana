@@ -84,6 +84,7 @@ install_users() {
 
 install_plugins() {
   echo raintank-worldping-app| xargs -n 1 grafana-cli plugins install
+  echo grafana-piechart-panel| xargs -n 1 grafana-cli plugins install
 }
 
 configure_grafana() {
