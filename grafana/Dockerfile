@@ -3,7 +3,9 @@ LABEL maintainer="Jean-Avit Promis docker@katagena.com"
 # https://hub.docker.com/r/grafana/grafana/tags/
 
 COPY docker-entrypoint.sh /etc/grafana/docker-entrypoint.sh
-RUN mkdir -p /import/
+USER root
+RUN mkdir -p /import/ && chown -R grafana: /import/
+USER grafana
 COPY datasources /import/datasources/
 COPY dashboards /import/dashboards/
 COPY users /import/users/
